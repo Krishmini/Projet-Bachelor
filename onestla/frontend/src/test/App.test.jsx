@@ -90,8 +90,8 @@ describe('Connexion', () => {
         </AuthProvider>
       </MemoryRouter>
     )
-    expect(screen.getByPlaceholderText('votre@email.fr')).toBeInTheDocument()
-    expect(screen.getByPlaceholderText('••••••••')).toBeInTheDocument()
+   expect(screen.getByPlaceholderText('📧 votre@email.fr')).toBeInTheDocument()
+   expect(screen.getByPlaceholderText('🔒 votre mot de passe')).toBeInTheDocument()
     expect(screen.getByText('Se connecter')).toBeInTheDocument()
   })
 
@@ -120,10 +120,10 @@ describe('Connexion', () => {
       </MemoryRouter>
     )
 
-    fireEvent.change(screen.getByPlaceholderText('votre@email.fr'), {
+    fireEvent.change(screen.getByPlaceholderText('📧 votre@email.fr'), {
       target: { value: 'test@test.fr' },
     })
-    fireEvent.change(screen.getByPlaceholderText('••••••••'), {
+    fireEvent.change(screen.getByPlaceholderText('🔒 votre mot de passe'), {
       target: { value: 'mauvais' },
     })
     fireEvent.click(screen.getByText('Se connecter'))
