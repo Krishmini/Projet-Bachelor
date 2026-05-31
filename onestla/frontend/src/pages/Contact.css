@@ -1,0 +1,67 @@
+.contact-page { min-height: 100vh; }
+
+.contact-page .page-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.contact-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px 60px;
+}
+
+
+.contact-card {
+  width: 100%;
+  max-width: 800px;
+  background: white;
+  border: 3px solid #4DA8DA;
+  border-radius: 12px;
+  padding: 40px;
+}
+
+.contact-textarea {
+  border-radius: 16px;
+  resize: vertical;
+  min-height: 120px;
+}
+
+.auth-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.contact-title {
+  text-align: center;
+  font-family: 'Abhaya Libre';
+  font-size: 32px;
+  color: #4DA8DA;
+  margin-bottom: 35px;
+}
+
+.contact-header {
+  background: #4DA8DA;
+  border: 1px solid #4DA8DA;
+  padding: 40px;
+  text-align: center;
+  margin: 0 auto;
+  max-width: 8000px;
+  color: white;
+  font-family: 'Abhaya Libre';
+
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-header img {
+  width: 300px;
+  height: auto;
+  display: block;
+  margin-bottom: -77px;
+}
+
+

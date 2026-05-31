@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap');
+
+:root {
+  --bleu: #6B9FBF;
+  --bleu-fonce: #4a7fa0;
+  --bleu-clair: #d6e8f2;
+  --vert: #6aab5e;
+  --vert-fonce: #4e8a44;
+  --blanc: #ffffff;
+  --gris-clair: #f4f7fa;
+  --gris: #e0e8ef;
+  --texte: #2c3e50;
+  --texte-doux: #5a7080;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --shadow: 0 4px 20px rgba(107, 159, 191, 0.15);
+  --shadow-hover: 0 8px 30px rgba(107, 159, 191, 0.3);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  color: var(--texte);
+  background: var(--gris-clair);
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4 { font-family: 'Abhaya Libre'; }
+
+a { text-decoration: none; color: inherit; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 44px;
+  border-radius: 0px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: #4CAF50;
+  border: 1px solid var(--blanc);
+  color: var(--blanc);
+}
+.btn-primary:hover { background: #4DA8DA; transform: translateY(-1px); box-shadow: var(--shadow-hover); }
+
+.btn-secondary {
+  background: #4DA8DA;
+  color: var(--blanc);
+  font-family: 'Abhaya Libre', sans-serif;
+}
+.btn-secondary:hover { background: var(--bleu-fonce); transform: translateY(-1px); }
+
+.btn-danger {
+  background: #e74c3c;
+  color: var(--blanc);
+}
+.btn-danger:hover { background: #c0392b; }
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--bleu);
+  color: var(--bleu);
+}
+.btn-outline:hover { background: var(--bleu); color: var(--blanc); }
+
+.card {
+  background: var(--blanc);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.input-group label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+}
+
+.input-field {
+  padding: 12px 70px;
+  border: 2px solid var(--gris);
+  border-radius: 10px;
+  font-family: 'Abhaya Libre', sans-serif;
+  font-size: 0.95rem;
+  color: #555555;
+  background: #F2F2F2;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+
+
+.alert {
+  padding: 12px 18px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.alert-error   { background: #fde8e8; color: #c0392b; border: 1px solid #f5b7b1; }
+.alert-success { background: #eafbea; color: #27ae60; border: 1px solid #a9dfbf; }
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+.badge-psychologique { background: #ffffff; color: #555555; font-family: 'Abhaya Libre', sans-serif; font-size: 12px; }
+.badge-sociale       { background: #ffffff; color: #555555; font-family: 'Abhaya Libre', sans-serif; font-size: 12px; }
+.badge-financiere    { background: #ffffff; color: #555555; font-family: 'Abhaya Libre', sans-serif; font-size: 12px; }
