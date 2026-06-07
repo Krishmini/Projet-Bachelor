@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getRessource } from '../services/api';
 import './RessourceDetail.css';
 
+const ICONS = { psychologique: '🧠', sociale: '🤝', financiere: '💶' };
 
 export default function RessourceDetail() {
   const { id }                  = useParams();
