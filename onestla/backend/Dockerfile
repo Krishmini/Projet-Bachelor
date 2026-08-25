@@ -21,8 +21,7 @@ RUN rm -rf vendor \
     && composer install \
         --no-dev \
         --optimize-autoloader \
-        --no-interaction \
-        --no-scripts
+        --no-interaction
 
 RUN mkdir -p config/jwt var/cache var/log \
     && chmod -R 777 config/jwt var
