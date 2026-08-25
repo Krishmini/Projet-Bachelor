@@ -32,4 +32,4 @@ RUN mkdir -p config/jwt var/cache var/log \
 
 EXPOSE 8080
 
-CMD ["sh", "-c", "php bin/console lexik:jwt:generate-keypair --skip-if-exists --no-interaction && php bin/console doctrine:migrations:migrate --no-interaction && php -S 0.0.0.0:${PORT:-8080} -t public"]
+CMD ["sh", "-c", "php bin/console lexik:jwt:generate-keypair --skip-if-exists --no-interaction && php bin/console doctrine:migrations:migrate --no-interaction && php -S 0.0.0.0:${PORT:-8080} -t public public/index.php"]
