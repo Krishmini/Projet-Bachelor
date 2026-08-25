@@ -54,6 +54,10 @@ jobs:
           extensions: pdo_mysql, zip, mbstring
           coverage: none
 
+      - name: Créer le fichier environnement de test
+        working-directory: onestla/backend
+        run: cp .env.example .env
+
       - name: Installer les dépendances PHP
         working-directory: onestla/backend
         run: composer install --prefer-dist --no-progress --no-interaction
