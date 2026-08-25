@@ -2,43 +2,111 @@
 
 namespace App\Tests\Controller;
 
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ApiTest extends WebTestCase
 {
-    // ── Ressources publiques ──────────────────────────────────────────────────
-
-    public function testGetRessourcesPublic(): void
+    /**
+     * Connecte le compte de test et retourne son JWT.
+     */
+    private function getJwtToken(KernelBrowser $client): string
     {
-        $client = static::createClient();
-        $client->request('GET', '/api/ressources');
+        $client->request(
+            'POST',
+            '/api/login',
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
+                'email' => 'admin@onestla.fr',
+                'password' => 'admin1234',
+            ])
+        );
 
         $this->assertResponseIsSuccessful();
-        $this->assertResponseHeaderSame('Content-Type', 'application/json');
 
-        $data = json_decode($client->getResponse()->getContent(), true);
+        $data = json_decode(
+            $client->getResponse()->getContent(),
+            true
+        );
+
+        $this->assertArrayHasKey('token', $data);
+
+        return $data['token'];
+    }
+
+    // Ressources protégées
+
+    public function testGetRessourcesAuthenticated(): void
+    {
+        $client = static::createClient();
+        $token = $this->getJwtToken($client);
+
+        $client->request(
+            'GET',
+            '/api/ressources',
+            [],
+            [],
+            [
+                'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+                'HTTP_ACCEPT' => 'application/json',
+            ]
+        );
+
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseHeaderSame(
+            'Content-Type',
+            'application/json'
+        );
+
+        $data = json_decode(
+            $client->getResponse()->getContent(),
+            true
+        );
+
         $this->assertIsArray($data);
     }
 
     public function testGetRessourcesFilterByCategorie(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/api/ressources?categorie=psychologique');
+        $token = $this->getJwtToken($client);
+
+        $client->request(
+            'GET',
+            '/api/ressources?categorie=psychologique',
+            [],
+            [],
+            [
+                'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+                'HTTP_ACCEPT' => 'application/json',
+            ]
+        );
 
         $this->assertResponseIsSuccessful();
-        $data = json_decode($client->getResponse()->getContent(), true);
+
+        $data = json_decode(
+            $client->getResponse()->getContent(),
+            true
+        );
+
         $this->assertIsArray($data);
 
-        foreach ($data as $r) {
-            $this->assertEquals('psychologique', $r['categorie']);
+        foreach ($data as $ressource) {
+            $this->assertEquals(
+                'psychologique',
+                $ressource['categorie']
+            );
         }
     }
 
-    // ── Inscription ───────────────────────────────────────────────────────────
+    // Inscription
 
     public function testRegisterSuccess(): void
     {
         $client = static::createClient();
+
         $client->request(
             'POST',
             '/api/register',
@@ -46,40 +114,47 @@ class ApiTest extends WebTestCase
             [],
             ['CONTENT_TYPE' => 'application/json'],
             json_encode([
-                'email'    => 'test_' . uniqid() . '@example.com',
+                'email' => 'test_' . uniqid() . '@example.com',
                 'password' => 'Test1234!',
-                'nom'      => 'Test',
-                'prenom'   => 'User',
+                'nom' => 'Test',
+                'prenom' => 'User',
             ])
         );
 
         $this->assertResponseStatusCodeSame(201);
-        $data = json_decode($client->getResponse()->getContent(), true);
+
+        $data = json_decode(
+            $client->getResponse()->getContent(),
+            true
+        );
+
         $this->assertArrayHasKey('user', $data);
     }
 
     public function testRegisterMissingFields(): void
     {
         $client = static::createClient();
+
         $client->request(
             'POST',
             '/api/register',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['email' => 'incomplete@example.com'])
+            json_encode([
+                'email' => 'incomplete@example.com',
+            ])
         );
 
         $this->assertResponseStatusCodeSame(400);
     }
 
-    // ── Login ─────────────────────────────────────────────────────────────────
+    // Connexion
 
     public function testLoginSuccess(): void
     {
         $client = static::createClient();
 
-        // On utilise le compte admin créé par les fixtures
         $client->request(
             'POST',
             '/api/login',
@@ -87,19 +162,25 @@ class ApiTest extends WebTestCase
             [],
             ['CONTENT_TYPE' => 'application/json'],
             json_encode([
-                'email'    => 'admin@onestla.fr',
+                'email' => 'admin@onestla.fr',
                 'password' => 'admin1234',
             ])
         );
 
         $this->assertResponseIsSuccessful();
-        $data = json_decode($client->getResponse()->getContent(), true);
+
+        $data = json_decode(
+            $client->getResponse()->getContent(),
+            true
+        );
+
         $this->assertArrayHasKey('token', $data);
     }
 
     public function testLoginWrongPassword(): void
     {
         $client = static::createClient();
+
         $client->request(
             'POST',
             '/api/login',
@@ -107,7 +188,7 @@ class ApiTest extends WebTestCase
             [],
             ['CONTENT_TYPE' => 'application/json'],
             json_encode([
-                'email'    => 'admin@onestla.fr',
+                'email' => 'admin@onestla.fr',
                 'password' => 'mauvais_mdp',
             ])
         );
@@ -115,7 +196,7 @@ class ApiTest extends WebTestCase
         $this->assertResponseStatusCodeSame(401);
     }
 
-    // ── Endpoint protégé sans JWT ─────────────────────────────────────────────
+    // Routes protégées sans JWT
 
     public function testMeWithoutToken(): void
     {
@@ -125,8 +206,6 @@ class ApiTest extends WebTestCase
         $this->assertResponseStatusCodeSame(401);
     }
 
-    // ── Admin sans token ──────────────────────────────────────────────────────
-
     public function testAdminEndpointWithoutToken(): void
     {
         $client = static::createClient();
@@ -135,11 +214,12 @@ class ApiTest extends WebTestCase
         $this->assertResponseStatusCodeSame(401);
     }
 
-    // ── Contact ───────────────────────────────────────────────────────────────
+    // Contact public
 
     public function testContactSuccess(): void
     {
         $client = static::createClient();
+
         $client->request(
             'POST',
             '/api/contact',
@@ -147,9 +227,10 @@ class ApiTest extends WebTestCase
             [],
             ['CONTENT_TYPE' => 'application/json'],
             json_encode([
-                'nom'     => 'Jean',
-                'prenom'  => 'Test',
-                'sujet'   => 'Question',
+                'nom' => 'Jean',
+                'prenom' => 'Test',
+                'email' => 'jean.test@example.com',
+                'sujet' => 'Question',
                 'message' => 'Bonjour, je voudrais en savoir plus.',
             ])
         );
@@ -160,13 +241,16 @@ class ApiTest extends WebTestCase
     public function testContactMissingFields(): void
     {
         $client = static::createClient();
+
         $client->request(
             'POST',
             '/api/contact',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['nom' => 'Jean'])
+            json_encode([
+                'nom' => 'Jean',
+            ])
         );
 
         $this->assertResponseStatusCodeSame(400);

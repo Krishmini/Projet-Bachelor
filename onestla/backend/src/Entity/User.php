@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -43,14 +45,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['user:read'])]
     private bool $isVerified = false;
 
+    #[ORM\Column(options: ['default' => true])]
+    #[Groups(['user:read'])]
+    private bool $isActive = true;
+
     #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['user:read'])]
     private ?\DateTimeImmutable $createdAt = null;
+
+    /**
+     * @var Collection<int, DemandeAide>
+     */
+    #[ORM\OneToMany(targetEntity: DemandeAide::class, mappedBy: 'utilisateur')]
+    private Collection $demandesAide;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $resetToken = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $resetTokenExpiresAt = null;
 
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->roles = ['ROLE_USER'];
+        $this->demandesAide = new ArrayCollection();
     }
 
     public function getId(): ?int { return $this->id; }
@@ -82,5 +101,70 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function isVerified(): bool { return $this->isVerified; }
     public function setIsVerified(bool $isVerified): static { $this->isVerified = $isVerified; return $this; }
 
+    public function isActive(): bool
+{
+    return $this->isActive;
+}
+
+public function setIsActive(bool $isActive): static
+{
+    $this->isActive = $isActive;
+
+    return $this;
+}
     public function getCreatedAt(): ?\DateTimeImmutable { return $this->createdAt; }
+
+    /**
+     * @return Collection<int, DemandeAide>
+     */
+    public function getDemandesAide(): Collection
+    {
+        return $this->demandesAide;
+    }
+
+    public function addDemandesAide(DemandeAide $demandesAide): static
+    {
+        if (!$this->demandesAide->contains($demandesAide)) {
+            $this->demandesAide->add($demandesAide);
+            $demandesAide->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemandesAide(DemandeAide $demandesAide): static
+    {
+        if ($this->demandesAide->removeElement($demandesAide)) {
+            // set the owning side to null (unless already changed)
+            if ($demandesAide->getUtilisateur() === $this) {
+                $demandesAide->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): static
+    {
+        $this->resetToken = $resetToken;
+
+        return $this;
+    }
+
+    public function getResetTokenExpiresAt(): ?\DateTimeImmutable
+    {
+        return $this->resetTokenExpiresAt;
+    }
+
+    public function setResetTokenExpiresAt(?\DateTimeImmutable $resetTokenExpiresAt): static
+    {
+        $this->resetTokenExpiresAt = $resetTokenExpiresAt;
+
+        return $this;
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RessourceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -47,9 +49,22 @@ class Ressource
     #[Groups(['ressource:read'])]
     private ?\DateTimeImmutable $createdAt = null;
 
+    /**
+     * @var Collection<int, DemandeAide>
+     */
+    #[ORM\OneToMany(targetEntity: DemandeAide::class, mappedBy: 'ressource')]
+    private Collection $demandesAide;
+
+    #[ORM\Column(length: 150, nullable: true)]
+    private ?string $ville = null;
+
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $codePostal = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->demandesAide = new ArrayCollection();
     }
 
     public function getId(): ?int { return $this->id; }
@@ -73,4 +88,58 @@ class Ressource
     public function setCreatedBy(?User $createdBy): static { $this->createdBy = $createdBy; return $this; }
 
     public function getCreatedAt(): ?\DateTimeImmutable { return $this->createdAt; }
+
+    /**
+     * @return Collection<int, DemandeAide>
+     */
+    public function getDemandesAide(): Collection
+    {
+        return $this->demandesAide;
+    }
+
+    public function addDemandesAide(DemandeAide $demandesAide): static
+    {
+        if (!$this->demandesAide->contains($demandesAide)) {
+            $this->demandesAide->add($demandesAide);
+            $demandesAide->setRessource($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemandesAide(DemandeAide $demandesAide): static
+    {
+        if ($this->demandesAide->removeElement($demandesAide)) {
+            // set the owning side to null (unless already changed)
+            if ($demandesAide->getRessource() === $this) {
+                $demandesAide->setRessource(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): static
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?string
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(?string $codePostal): static
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
 }

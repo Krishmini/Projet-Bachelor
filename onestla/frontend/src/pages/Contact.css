@@ -1,67 +1,286 @@
-.contact-page { min-height: 100vh; }
+.contact-page {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #f4f7fb;
+}
 
-.contact-page .page-hero {
+/* En-tête */
+
+.contact-header {
+  display: grid;
+  grid-template-columns:
+    minmax(180px, 300px)
+    minmax(0, 1fr);
+  align-items: end;
+  width: 100%;
+  min-height: 310px;
+  padding: 30px 60px 0;
+  overflow: hidden;
+  background: #70a9d8;
+  color: #ffffff;
+}
+
+.contact-header img {
+  display: block;
+  align-self: end;
+  width: min(100%, 260px);
+  height: auto;
+  max-height: 280px;
+  margin: 0;
+  object-fit: contain;
+  object-position: bottom;
+}
+
+.contact-header h1 {
+  align-self: center;
+  margin: 0;
+  padding: 0 20px 35px;
+  color: #ffffff;
+  font-family: 'Abhaya Libre', serif;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 800;
+  text-align: center;
+}
+
+/* Contenu */
+
+.contact-container {
+  display: block;
+  width: min(100% - 40px, 950px);
+  margin: 0 auto;
+  padding: 55px 0 65px;
+}
+
+.contact-container form {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 28px;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+}
+
+.contact-account-information,
+.contact-message-information {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 30px;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow:
+    0 12px 30px
+    rgba(42, 79, 110, 0.08);
+}
+
+.contact-account-information h2,
+.contact-message-information h2 {
+  margin: 0 0 8px;
+  color: #26374a;
+  font-size: 1.6rem;
+}
+
+.contact-account-information > p {
+  margin: 0 0 25px;
+  color: #68798c;
+  line-height: 1.6;
+}
+
+.contact-container .auth-row {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
   gap: 16px;
 }
 
-.contact-container {
-  display: flex;
-  justify-content: center;
-  padding: 40px 20px 60px;
+.contact-container .input-group {
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 20px;
 }
 
+.contact-container label {
+  display: block;
+  margin-bottom: 8px;
+  color: #42566c;
+  font-weight: 700;
+}
 
-.contact-card {
+.contact-container .input-field {
+  box-sizing: border-box;
   width: 100%;
-  max-width: 800px;
-  background: white;
-  border: 3px solid #4DA8DA;
-  border-radius: 12px;
-  padding: 40px;
+  min-width: 0;
 }
 
 .contact-textarea {
-  border-radius: 16px;
+  min-height: 150px;
+  border-radius: 14px;
   resize: vertical;
-  min-height: 120px;
 }
 
-.auth-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+.readonly-field {
+  background: #edf2f6;
+  color: #68798c;
+  cursor: not-allowed;
 }
 
-.contact-title {
-  text-align: center;
-  font-family: 'Abhaya Libre';
-  font-size: 32px;
-  color: #4DA8DA;
-  margin-bottom: 35px;
+.contact-submit {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
 }
+
+.contact-character-count {
+  display: block;
+  margin-top: 6px;
+  color: #7b8c9d;
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+/* Tablette */
+
+@media (max-width: 800px) {
+  .contact-header {
+    grid-template-columns: 220px 1fr;
+    min-height: 270px;
+    padding: 25px 30px 0;
+  }
+
+  .contact-header img {
+    width: 210px;
+    max-height: 240px;
+  }
+
+  .contact-header h1 {
+    padding-bottom: 25px;
+    font-size: 2.7rem;
+  }
+}
+
+/* Téléphone */
+
+@media (max-width: 600px) {
+  .contact-header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 4px;
+    min-height: 300px;
+    padding: 22px 16px 24px;
+  }
+
+  .contact-header img {
+    width: 150px;
+    max-height: 190px;
+    margin: 0;
+  }
+
+  .contact-header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 2.2rem;
+    line-height: 1.1;
+  }
+
+  .contact-container {
+    width: calc(100% - 24px);
+    padding: 30px 0 40px;
+  }
+
+  .contact-account-information,
+  .contact-message-information {
+    padding: 22px 18px;
+    border-radius: 14px;
+  }
+
+  .contact-account-information h2,
+  .contact-message-information h2 {
+    font-size: 1.45rem;
+  }
+
+  .contact-account-information > p {
+    font-size: 0.92rem;
+  }
+
+  .contact-container .auth-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .contact-textarea {
+    min-height: 135px;
+  }
+
+  .contact-submit .btn {
+    width: 100%;
+  }
+}
+
 
 .contact-header {
-  background: #4DA8DA;
-  border: 1px solid #4DA8DA;
-  padding: 40px;
-  text-align: center;
-  margin: 0 auto;
-  max-width: 8000px;
-  color: white;
-  font-family: 'Abhaya Libre';
+  min-height: 320px;
+  padding: 0 max(
+    24px,
+    calc((100% - 1100px) / 2)
+  );
 
-  position: relative;
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  align-items: stretch;
+
+  background: #4DA8DA;
+  color: white;
   overflow: hidden;
 }
 
 .contact-header img {
-  width: 300px;
+  position: static;
+  align-self: end;
+  justify-self: center;
+
+  width: 320px; 
   height: auto;
-  display: block;
-  margin-bottom: -77px;
+  margin: 0;
+  object-fit: contain;
 }
 
+.contact-header h1 {
+  align-self: center;
+  justify-self: center;
 
+  width: 100%;
+  margin: 0;
+
+  text-align: center;
+  font-family: 'Abhaya Libre';
+  font-size: 3rem;
+  color: white;
+}
+
+/* Téléphone */
+@media (max-width: 600px) {
+  .contact-header {
+    position: relative;
+    min-height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 30px 24px;
+  }
+
+  .contact-header img {
+    position: absolute;
+    left: 12px;
+    bottom: 0;
+    width: 145px;
+  }
+
+  .contact-header h1 {
+    width: calc(100% - 120px);
+    font-size: 2.1rem;
+    text-align: center;
+  }
+}

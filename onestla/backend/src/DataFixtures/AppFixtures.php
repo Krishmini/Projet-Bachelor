@@ -14,7 +14,7 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        // ── Admin ───────────────────────────────────────────────
+        //Admin 
         $admin = new User();
         $admin->setEmail('admin@onestla.fr');
         $admin->setNom('Admin');
@@ -24,7 +24,7 @@ class AppFixtures extends Fixture
         $admin->setIsVerified(true);
         $manager->persist($admin);
 
-        // ── Users de test ────────────────────────────────────────
+        //Users de test 
         $users = [
             ['Krishmini', 'Kulakrishna', 'krishmini@test.fr', 'password123'],
             ['Marie',     'Dupont',      'marie@test.fr',     'password123'],
@@ -41,7 +41,7 @@ class AppFixtures extends Fixture
             $manager->persist($u);
         }
 
-        // ── Ressources ───────────────────────────────────────────
+        //Ressources 
         $ressources = [
             [
                 'titre'       => 'Soutien psychologique',
