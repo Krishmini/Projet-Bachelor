@@ -1,159 +1,329 @@
+.home {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Hero */
+
 .home-hero {
+  width: 100%;
+  padding: 55px 24px 70px;
   background: #4DA8DA;
-  color: var(--blanc);
-  padding: 60px 24px 80px;
+  color: #ffffff;
 }
 
 .home-hero-content {
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
+  display: grid;
+  grid-template-columns:
+    minmax(220px, 320px)
+    minmax(0, 1fr);
   align-items: center;
-  gap: 48px;
+  gap: 50px;
+  width: min(900px, 100%);
+  margin: 0 auto;
 }
 
 .home-hero-illustration {
   display: flex;
   align-items: flex-end;
-}
-
-.home-hero-illustration img {
-  width: 320px;
-  height: auto;
-  display: block;
-  margin-bottom: -80px;
-}
-
-.illustration-circle {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.15);
-  display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 5rem;
+  min-width: 0;
 }
 
+.home-woman-image {
+  display: block;
+  width: min(100%, 320px);
+  height: auto;
+  margin-bottom: -70px;
+  object-fit: contain;
+}
 
 .home-hero-text {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  min-width: 0;
   text-align: center;
 }
 
 .home-hero-text h1 {
-  font-size: 30px;
+  margin: 0 0 28px;
+  font-family: 'Abhaya Libre', serif;
+  font-size: clamp(2rem, 4vw, 2.7rem);
   font-weight: 800;
-  font-family: 'Abhaya Libre';
-  margin-bottom: 12px;
 }
 
-.home-hero-text p {
-  font-size: 1.1rem;
-  opacity: 0.9;
-  margin-bottom: 28px;
-  line-height: 1.6;
-}
+/* Recherche */
 
 .search-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    72px;
   gap: 10px;
-  width: 100%;
-  max-width: 480px;
+  width: min(100%, 520px);
 }
 
 .search-input {
-  flex: 1;
-  background: rgba(255,255,255,0.95);
-  border-color: transparent;
-  border-radius: 0;
+  width: 100%;
+  min-width: 0;
+  height: 56px;
+  padding: 12px 18px;
+  border: 2px solid #dce6ee;
+  border-radius: 12px;
+  background: #ffffff;
 }
 
 .search-btn {
-  padding: 12px 20px;
+  width: 72px;
+  min-width: 0;
+  height: 56px;
+  padding: 0;
+  border-radius: 0;
   font-size: 1.1rem;
 }
 
 /* Catégories */
+
 .home-categories {
-  padding: 50px 0 40px;
+  padding: 90px 0 55px;
 }
 
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
   gap: 24px;
 }
 
 .category-card {
-  background: #ffffff;
-  border-radius: var(--radius-lg);
-  border: 1px solid black;
-  padding: 32px 24px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  min-width: 0;
+  padding: 32px 22px;
+  border: 1px solid #26374a;
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow:
+    0 10px 24px
+    rgba(55, 90, 120, 0.08);
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: var(--shadow);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
-
-
 
 .category-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
+  box-shadow:
+    0 15px 30px
+    rgba(55, 90, 120, 0.15);
 }
 
 .category-icon {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   object-fit: contain;
 }
 
 .category-label {
-  font-family: 'Abhaya Libre';
+  color: #455263;
+  font-family: 'Abhaya Libre', serif;
+  font-size: 1.15rem;
   font-weight: 800;
-  font-size: 1rem;
-  color: #555555;
+  text-align: center;
 }
 
 .category-btn {
   margin-top: 4px;
-  padding: 8px 20px;
-  font-size: 22px;
-  font-family: 'Abhaya Libre';
+  padding: 10px 28px;
+  font-size: 1rem;
 }
 
 /* À propos */
-.home-about { padding: 0 0 60px; }
+
+.home-about {
+  padding: 0 0 60px;
+}
 
 .about-card {
-  padding: 40px 48px;
+  padding: 35px 40px;
+  border-radius: 18px;
+  background: #ffffff;
 }
 
 .about-card h2 {
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: var(--bleu-fonce);
-  margin-bottom: 16px;
+  margin: 0 0 12px;
+  color: #26374a;
+  font-size: 1.7rem;
 }
 
 .about-card p {
-  font-size: 0.95rem;
-  line-height: 1.8;
-  color: var(--texte-doux);
-  max-width: 700px;
+  max-width: 900px;
+  margin: 0;
+  color: #526579;
+  font-size: 1rem;
+  line-height: 1.7;
 }
 
+/* Tablette */
+
+@media (max-width: 900px) {
+  .home-hero-content {
+    gap: 28px;
+  }
+
+  .home-woman-image {
+    width: 240px;
+  }
+
+  .categories-grid {
+    gap: 16px;
+  }
+}
+
+/* Téléphone */
+
 @media (max-width: 700px) {
-  .home-hero-content { flex-direction: column; text-align: center; }
-  .categories-grid   { grid-template-columns: 1fr; }
-  .home-hero-text h1 { font-size: 1.8rem; }
+  .home-hero {
+    padding: 28px 16px 38px;
+  }
+
+  .home-hero-content {
+    display: grid;
+    grid-template-columns: 145px minmax(0, 1fr);
+    grid-template-rows: 210px auto;
+    align-items: end;
+    gap: 18px 12px;
+    width: 100%;
+  }
+
+  .home-hero-illustration {
+    grid-column: 1;
+    grid-row: 1;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+
+    width: 100%;
+    height: 210px;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .home-woman-image {
+    width: 165px;
+    max-width: none;
+    height: auto;
+    margin: 0 0 -2px;
+    object-fit: contain;
+  }
+
+  /*
+   * Permet de positionner séparément
+   * le titre et la recherche dans la grille.
+   */
+  .home-hero-text {
+    display: contents;
+  }
+
+  .home-hero-text h1 {
+    grid-column: 2;
+    grid-row: 1;
+
+    align-self: center;
+    width: 100%;
+    margin: 0;
+
+    font-size: clamp(1.65rem, 8vw, 2.15rem);
+    line-height: 1.1;
+    text-align: center;
+  }
+
+  .search-bar {
+    grid-column: 1 / -1;
+    grid-row: 2;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 58px;
+    gap: 10px;
+
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .search-input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    height: 52px;
+    padding: 10px 13px;
+
+    font-size: 0.92rem;
+    text-overflow: ellipsis;
+  }
+
+  .search-btn {
+    width: 58px;
+    min-width: 0;
+    height: 52px;
+    padding: 0;
+  }
+
+  .home-categories {
+    padding: 45px 0 35px;
+  }
+
+  .categories-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .category-card {
+    padding: 25px 18px;
+  }
+
+  .category-icon {
+    width: 105px;
+    height: 105px;
+  }
+
+  .home-about {
+    padding-bottom: 35px;
+  }
+
+  .about-card {
+    padding: 25px 20px;
+  }
+}
+
+/* Très petit téléphone */
+
+@media (max-width: 380px) {
+  .home-hero-content {
+    grid-template-columns: 120px minmax(0, 1fr);
+    grid-template-rows: 185px auto;
+  }
+
+  .home-hero-illustration {
+    height: 185px;
+  }
+
+  .home-woman-image {
+    width: 140px;
+  }
+
+  .home-hero-text h1 {
+    font-size: 1.65rem;
+  }
+
+  .search-input {
+    font-size: 0.82rem;
+  }
 }

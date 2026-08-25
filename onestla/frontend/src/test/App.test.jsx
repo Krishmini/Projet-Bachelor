@@ -5,7 +5,7 @@ import RessourceCard from '../components/RessourceCard'
 import Connexion from '../pages/Connexion'
 import { AuthProvider } from '../context/AuthContext'
 
-// ── Mock axios/api ────────────────────────────────────────────────────────────
+//Mock axios/api 
 vi.mock('../services/api', () => ({
   login: vi.fn(),
   getMe: vi.fn(),
@@ -31,7 +31,7 @@ const mockRessource = {
   createdAt: '2025-01-01',
 }
 
-// ── RessourceCard ─────────────────────────────────────────────────────────────
+//RessourceCard
 describe('RessourceCard', () => {
   it('affiche le titre de la ressource', () => {
     render(
@@ -80,7 +80,7 @@ describe('RessourceCard', () => {
   })
 })
 
-// ── Connexion page ────────────────────────────────────────────────────────────
+//Connexion page
 describe('Connexion', () => {
   it('affiche le formulaire de connexion', () => {
     render(
@@ -134,7 +134,7 @@ describe('Connexion', () => {
   })
 })
 
-// ── RessourceCard – toutes catégories ────────────────────────────────────────
+//RessourceCard – toutes catégories
 describe('RessourceCard – catégories', () => {
   const cats = ['psychologique', 'sociale', 'financiere']
   cats.forEach((cat) => {

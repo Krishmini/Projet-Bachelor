@@ -1,0 +1,216 @@
+.mes-demandes-page {
+  min-height: calc(100vh - 100px);
+  background: #f4f7fb;
+  padding-bottom: 70px;
+  color: #28384a;
+}
+
+.mes-demandes-header {
+  padding: 50px 20px;
+  text-align: center;
+  background: #4DA8DA;
+  color: #ffffff;
+}
+
+.mes-demandes-header h1 {
+  margin: 0;
+  font-family: "Abhaya Libre", serif;
+  font-size: 44px;
+}
+
+.mes-demandes-header p {
+  margin: 10px 0 0;
+  font-size: 18px;
+}
+
+.mes-demandes-container {
+  width: min(950px, calc(100% - 40px));
+  margin: 40px auto 0;
+}
+
+.demandes-list {
+  display: grid;
+  gap: 25px;
+}
+
+.demande-item {
+  box-sizing: border-box;
+  padding: 30px;
+  border-left: 6px solid #4DA8DA;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(43, 77, 105, 0.1);
+}
+
+.demande-item-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.demande-item h2 {
+  margin: 10px 0;
+  font-family: "Abhaya Libre", serif;
+  font-size: 28px;
+}
+
+.demande-category {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: #edf3f8;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.demande-status {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.demande-status-envoyee {
+  background: #e8f3fc;
+  color: #4DA8DA;
+}
+
+.demande-status-en_cours {
+  background: #fff3d9;
+  color: #4CAF50;
+}
+
+.demande-status-traitee {
+  background: #e8f6e9;
+  color: #4CAF50;
+}
+
+.demande-status-refusee {
+  background: #fdeae7;
+  color: #a23b2a;
+}
+
+.demande-date {
+  margin: 0 0 22px;
+  color: #718096;
+  font-size: 14px;
+}
+
+.demande-message,
+.demande-admin-response {
+  margin-top: 18px;
+  padding: 18px 20px;
+  border-radius: 12px;
+}
+
+.demande-message {
+  background: #f7f9fc;
+}
+
+.demande-admin-response {
+  border: 1px solid #4CAF50;
+  background: #eff8f0;
+}
+
+.demande-message h3,
+.demande-admin-response h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.demande-message p,
+.demande-admin-response p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.demande-waiting {
+  margin-top: 18px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: #4CAF50;
+  color: #27632d;
+}
+
+.demande-resource-link {
+  display: inline-block;
+  margin-top: 22px;
+  color: #4DA8DA;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.demande-resource-link:hover {
+  text-decoration: underline;
+}
+
+.demandes-empty {
+  padding: 60px 30px;
+  border-radius: 18px;
+  background: #ffffff;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(43, 77, 105, 0.1);
+}
+
+.demandes-empty-icon {
+  font-size: 45px;
+}
+
+.demandes-empty h2 {
+  margin-bottom: 10px;
+}
+
+.demandes-empty p {
+  margin-bottom: 25px;
+  color: #718096;
+}
+
+.demandes-button {
+  display: inline-block;
+  padding: 13px 24px;
+  border-radius: 8px;
+  background: #4DA8DA;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.demandes-loading,
+.demandes-error {
+  padding: 25px;
+  border-radius: 12px;
+  background: #ffffff;
+  text-align: center;
+}
+
+.demandes-error {
+  border: 1px solid #4CAF50;
+  background: #fff0ed;
+  color: #a23b2a;
+}
+
+@media (max-width: 700px) {
+  .mes-demandes-header h1 {
+    font-size: 34px;
+  }
+
+  .mes-demandes-container {
+    width: min(100% - 24px, 950px);
+    margin-top: 25px;
+  }
+
+  .demande-item {
+    padding: 24px 20px;
+  }
+
+  .demande-item-top {
+    flex-direction: column;
+  }
+
+  .demande-item h2 {
+    font-size: 24px;
+  }
+}

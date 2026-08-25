@@ -1,50 +1,207 @@
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import './Navbar.css';
-import logo from "../assets/logo.png";
+import {
+  useEffect,
+  useState,
+} from 'react';
 
+import {
+  Link,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
+
+import {
+  useAuth,
+} from '../context/AuthContext';
+
+import './Navbar.css';
+import logo from '../assets/logo.png';
 
 export default function Navbar() {
-  const { user, logout, isAdmin } = useAuth();
+  const {
+    user,
+    logout,
+    isAdmin,
+  } = useAuth();
+
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [
+    menuOpen,
+    setMenuOpen,
+  ] = useState(false);
+
+  /*
+   * Fermer automatiquement le menu
+   * lorsqu’on change de page.
+   */
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
   const handleLogout = () => {
+    setMenuOpen(false);
     logout();
     navigate('/');
   };
 
-  const isActive = (path) => location.pathname === path ? 'active' : '';
+  const isActive = (path) =>
+    location.pathname === path
+      ? 'active'
+      : '';
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
 
   return (
-    <nav className="navbar"><br></br>
+    <nav className="navbar">
       <div className="navbar-inner">
-        <Link to="/" className="navbar-brand">
-          <img src={logo} alt="Logo" className="brand-logo" />
-          <span className="brand-name">
-          </span>
+        <Link
+          to="/"
+          className="navbar-brand"
+          onClick={closeMenu}
+        >
+          <img
+            src={logo}
+            alt="Logo OnEstLà"
+            className="brand-logo"
+          />
         </Link>
 
-        <ul className="navbar-links">
-          <li><Link to="/" className={isActive('/')}>Accueil</Link></li>
-          <li><Link to="/ressources" className={isActive('/ressources')}>Ressources</Link></li>
-          {user && isAdmin() && (
-            <li><Link to="/admin" className={isActive('/admin')}>Admin</Link></li>
-          )}
-          <li><Link to="/contact" className={isActive('/contact')}>Contact</Link></li>
-          {user ? (
+        {/* Bouton téléphone et tablette */}
+        <button
+          type="button"
+          className={`navbar-toggle ${
+            menuOpen ? 'opened' : ''
+          }`}
+          aria-label={
+            menuOpen
+              ? 'Fermer le menu'
+              : 'Ouvrir le menu'
+          }
+          aria-expanded={menuOpen}
+          aria-controls="navbar-navigation"
+          onClick={() =>
+            setMenuOpen(
+              (current) => !current
+            )
+          }
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
+        <ul
+          id="navbar-navigation"
+          className={`navbar-links ${
+            menuOpen ? 'navbar-links-open' : ''
+          }`}
+        >
+          <li>
+            <Link
+              to="/"
+              className={isActive('/')}
+              onClick={closeMenu}
+            >
+              Accueil
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              to="/contact"
+              className={isActive('/contact')}
+              onClick={closeMenu}
+            >
+              Contact
+            </Link>
+          </li>
+
+          {user && (
             <>
-              <li><Link to="/profil" className={isActive('/profil')}>Profil</Link></li>
+              {!isAdmin() && (
+                <>
+                  <li>
+                    <Link
+                      to="/ressources"
+                      className={isActive(
+                        '/ressources'
+                      )}
+                      onClick={closeMenu}
+                    >
+                      Ressources
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link
+                      to="/mes-demandes"
+                      className={isActive(
+                        '/mes-demandes'
+                      )}
+                      onClick={closeMenu}
+                    >
+                      Mes demandes
+                    </Link>
+                  </li>
+                </>
+              )}
+
+              {isAdmin() && (
+                <li>
+                  <Link
+                    to="/admin"
+                    className={isActive(
+                      '/admin'
+                    )}
+                    onClick={closeMenu}
+                  >
+                    Admin
+                  </Link>
+                </li>
+              )}
+
               <li>
-                <button className="btn-logout" onClick={handleLogout}>Déconnexion</button>
+                <Link
+                  to="/profil"
+                  className={isActive(
+                    '/profil'
+                  )}
+                  onClick={closeMenu}
+                >
+                  Profil
+                </Link>
+              </li>
+
+              <li>
+                <button
+                  type="button"
+                  className="btn-logout"
+                  onClick={handleLogout}
+                >
+                  Déconnexion
+                </button>
               </li>
             </>
-          ) : (
-            <li><Link to="/connexion" className={isActive('/connexion')}>Connexion</Link></li>
+          )}
+
+          {!user && (
+            <li>
+              <Link
+                to="/connexion"
+                className={isActive(
+                  '/connexion'
+                )}
+                onClick={closeMenu}
+              >
+                Connexion
+              </Link>
+            </li>
           )}
         </ul>
-      </div><br></br>
+      </div>
     </nav>
-    
   );
 }

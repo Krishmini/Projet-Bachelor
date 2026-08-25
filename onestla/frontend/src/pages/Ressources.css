@@ -96,3 +96,77 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   margin-top: 20px;
 }
+
+.location-filter {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #dce6ee;
+}
+
+.location-filter h4 {
+  margin: 0 0 12px;
+  color: #26374a;
+}
+
+.location-filter form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.location-filter-input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 11px 12px;
+  border: 2px solid #dce6ee;
+  border-radius: 8px;
+  outline: none;
+  font-family: inherit;
+}
+
+.location-filter-input:focus {
+  border-color: #70a9d8;
+}
+
+.location-filter-button {
+  padding: 11px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #70a9d8;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.location-filter-button:hover {
+  background: #4f91c7;
+}
+
+.active-location {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  background: #eaf4fb;
+  color: #3674a5;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.active-location button {
+  border: none;
+  background: transparent;
+  color: #c64f38;
+  cursor: pointer;
+}
+
+.location-information {
+  margin-bottom: 18px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: #eaf4fb;
+  color: #3674a5;
+}

@@ -16,6 +16,13 @@ export default function RessourceCard({ ressource }) {
         <h3>{ressource.titre}</h3>
         <p>{ressource.description}</p>
       </div>
+      {ressource.ville && (
+        <p className="resource-location">
+          📍 {ressource.codePostal
+            ? `${ressource.codePostal} ${ressource.ville}`
+            : ressource.ville}
+        </p>
+      )}
       <Link to={`/ressources/${ressource.id}`} className="btn btn-primary ressource-card-btn">
         Voir détails
       </Link>

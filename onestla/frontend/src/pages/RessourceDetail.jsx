@@ -34,6 +34,17 @@ export default function RessourceDetail() {
               <span className={`badge badge-${ressource.categorie}`}>{ressource.categorie}</span>
               <h1>{ressource.titre}</h1>
               <p className="detail-description">{ressource.description}</p>
+
+              {ressource.ville && (
+                <div className="resource-detail-location">
+                  📍 Disponible :
+                  <strong>
+                    {ressource.codePostal
+                      ? ` ${ressource.codePostal} ${ressource.ville}`
+                      : ` ${ressource.ville}`}
+                  </strong>
+                </div>
+              )}
             </div>
           </div>
 
@@ -55,8 +66,11 @@ export default function RessourceDetail() {
           )}
 
           <div className="detail-footer">
-            <button className="btn btn-primary" onClick={() => navigate('/contact')}>
-              Valider l'aide
+            <button
+              className="btn btn-primary"
+              onClick={() => navigate(`/ressources/${ressource.id}/demande`)}
+            >
+              Demander cette aide
             </button>
           </div>
         </div>

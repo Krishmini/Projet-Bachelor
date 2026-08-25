@@ -1,0 +1,44 @@
+# Dépendances
+**/node_modules/
+backend/vendor/
+
+# Builds
+frontend/dist/
+backend/public/build/
+
+# Caches
+backend/var/
+backend/.phpunit.cache/
+frontend/node_modules/.vite/
+coverage/
+
+# Environnement et secrets
+backend/.env
+backend/.env.test
+backend/.env.local
+backend/.env.*.local
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# Les exemples restent autorisés
+!backend/.env.example
+!frontend/.env.example
+
+# Clés JWT
+backend/config/jwt/*.pem
+
+# Fichiers générés
+backend/public/bundles/
+backend/public/assets/
+backend/assets/vendor/
+
+# IDE et système
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Journaux
+*.log
+npm-debug.log*
