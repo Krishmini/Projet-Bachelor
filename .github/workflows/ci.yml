@@ -36,7 +36,7 @@ jobs:
     env:
       APP_ENV: test
       APP_SECRET: github-actions-test-secret
-      DATABASE_URL: "mysql://onestla:onestla_pwd@127.0.0.1:3306/onestla_test?serverVersion=8.0&charset=utf8mb4"
+      DATABASE_URL: "mysql://onestla:onestla_pwd@127.0.0.1:3306/onestla?serverVersion=8.0&charset=utf8mb4"
       JWT_SECRET_KEY: "%kernel.project_dir%/config/jwt/private.pem"
       JWT_PUBLIC_KEY: "%kernel.project_dir%/config/jwt/public.pem"
       JWT_PASSPHRASE: test_passphrase
