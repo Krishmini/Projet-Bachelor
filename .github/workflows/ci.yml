@@ -1,0 +1,103 @@
+name: CI OnEstLa
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - feature/ajout-ressources-reelles
+
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  backend:
+    name: Backend - Symfony et PHPUnit
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: onestla_test
+          MYSQL_USER: onestla
+          MYSQL_PASSWORD: onestla_pwd
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      APP_ENV: test
+      APP_SECRET: github-actions-test-secret
+      DATABASE_URL: "mysql://onestla:onestla_pwd@127.0.0.1:3306/onestla_test?serverVersion=8.0&charset=utf8mb4"
+      JWT_SECRET_KEY: "%kernel.project_dir%/config/jwt/private.pem"
+      JWT_PUBLIC_KEY: "%kernel.project_dir%/config/jwt/public.pem"
+      JWT_PASSPHRASE: test_passphrase
+      MAILER_DSN: "null://null"
+      FRONTEND_URL: "http://localhost:3000"
+
+    steps:
+      - name: Récupérer le projet
+        uses: actions/checkout@v4
+
+      - name: Installer PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: pdo_mysql, zip, mbstring
+          coverage: none
+
+      - name: Installer les dépendances PHP
+        working-directory: onestla/backend
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Générer les clés JWT de test
+        working-directory: onestla/backend
+        run: |
+          mkdir -p config/jwt
+          php bin/console lexik:jwt:generate-keypair --skip-if-exists
+
+      - name: Préparer la base de test
+        working-directory: onestla/backend
+        run: |
+          php bin/console doctrine:migrations:migrate --no-interaction --env=test
+          php bin/console doctrine:fixtures:load --no-interaction --env=test
+          php bin/console doctrine:schema:validate --env=test
+
+      - name: Lancer les tests backend
+        working-directory: onestla/backend
+        run: php bin/phpunit --testdox
+
+  frontend:
+    name: Frontend - React et Vitest
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le projet
+        uses: actions/checkout@v4
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: onestla/frontend/package-lock.json
+
+      - name: Installer les dépendances JavaScript
+        working-directory: onestla/frontend
+        run: npm ci
+
+      - name: Lancer les tests frontend
+        working-directory: onestla/frontend
+        run: npm test
+
+      - name: Construire le frontend
+        working-directory: onestla/frontend
+        run: npm run build
